@@ -21,9 +21,9 @@ export default function RootLayout() {
 
   return (
     <PostHogProvider
-      apiKey="YOUR_POSTHOG_API_KEY"
+      apiKey="phc_YjhOo6KO2hwmIAc9PLoCPzlGwUZ4dP3u7gURRB9wTNZ"
       options={{
-        host: 'https://app.posthog.com'
+        host: 'https://us.i.posthog.com'
       }}
     >
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
