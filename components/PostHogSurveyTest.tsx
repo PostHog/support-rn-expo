@@ -9,11 +9,9 @@ export const PostHogSurveyTest = () => {
     try {
       // Capture the feedback button click event
       posthog.capture('feedback_button_clicked');
-      
       // Force flush to ensure event is sent immediately
       await posthog.flush();
-      
-      // Reload feature flags as mentioned in the issue
+      // Reload feature flags in case they were updated
       await posthog.reloadFeatureFlags();
       
       console.log('Feedback button clicked and events flushed');

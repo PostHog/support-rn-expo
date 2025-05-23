@@ -23,7 +23,8 @@ export default function RootLayout() {
     <PostHogProvider
       apiKey="phc_YjhOo6KO2hwmIAc9PLoCPzlGwUZ4dP3u7gURRB9wTNZ"
       options={{
-        host: 'https://us.i.posthog.com'
+        host: 'https://us.i.posthog.com',
+        enableSessionReplay: true,
       }}
     >
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
