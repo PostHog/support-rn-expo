@@ -3,7 +3,7 @@ import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { PostHogProvider } from 'posthog-react-native';
+import { PostHogProvider, PostHogSurveyProvider } from 'posthog-react-native';
 import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
@@ -27,14 +27,16 @@ export default function RootLayout() {
         enableSessionReplay: true,
       }}
     >
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="+not-found" />
-        </Stack>
-        <StatusBar style="auto" />
-        <PostHogSurveyTest />
-      </ThemeProvider>
+      <PostHogSurveyProvider>
+        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+          <Stack>
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="+not-found" />
+          </Stack>
+          <StatusBar style="auto" />
+          <PostHogSurveyTest />
+        </ThemeProvider>
+      </PostHogSurveyProvider>
     </PostHogProvider>
   );
 }
