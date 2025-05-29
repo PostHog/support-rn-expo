@@ -26,6 +26,7 @@ export default function RootLayout() {
         host: 'https://us.i.posthog.com',
         enableSessionReplay: true,
       }}
+      debug={true}
     >
       <PostHogSurveyProvider>
         <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>

@@ -1,50 +1,39 @@
-# Welcome to your Expo app 👋
+# PostHog React Native SDK Example with Expo
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+This repository serves as a reference implementation for using the PostHog React Native SDK with Expo. It demonstrates how to:
 
-## Get started
+- Set up PostHog tracking in a React Native Expo application
+- Configure the PostHog provider
+- Implement session replay
+- Use PostHog surveys
+- Handle theme changes and navigation
 
-1. Install dependencies
+## Getting Started
 
+1. Clone this repository
+2. Install dependencies:
    ```bash
    npm install
    ```
-
-2. Start the app
-
+3. Start the development server:
    ```bash
    npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+## Key Features Demonstrated
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- PostHog initialization and configuration
+- Session replay implementation
+- Survey integration
+- Theme-aware tracking
+- Navigation tracking
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Requirements
 
-## Get a fresh project
+- Node.js
+- Expo CLI
+- iOS Simulator or Android Emulator (or physical device)
 
-When you're ready, run:
+## Learn More
 
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+For more information about the PostHog React Native SDK, visit our [official documentation](https://posthog.com/docs/integrate/client/react-native).
