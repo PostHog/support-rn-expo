@@ -1,6 +1,8 @@
+import { useSurvey } from '@/contexts/SurveyContext';
 import { usePostHog } from 'posthog-react-native';
 import React, { useState } from 'react';
-import { Button, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Button } from 'react-native-paper';
 
 interface EventProperty {
   key: string;
@@ -9,6 +11,7 @@ interface EventProperty {
 
 export const PostHogEventTracker = () => {
   const posthog = usePostHog();
+  const { setShowSurvey } = useSurvey();
   const [eventName, setEventName] = useState('');
   const [properties, setProperties] = useState<EventProperty[]>([]);
   const [newPropertyKey, setNewPropertyKey] = useState('');
@@ -62,7 +65,7 @@ export const PostHogEventTracker = () => {
           {properties.map((prop, index) => (
             <View key={index} style={styles.propertyRow}>
               <Text style={styles.propertyText}>{prop.key}: {prop.value}</Text>
-              <Button title="Remove" onPress={() => removeProperty(index)} />
+              <Button mode="text" onPress={() => removeProperty(index)}>Remove</Button>
             </View>
           ))}
           <View style={styles.addPropertyContainer}>
@@ -78,14 +81,26 @@ export const PostHogEventTracker = () => {
               onChangeText={setNewPropertyValue}
               placeholder="Property value"
             />
-            <Button title="Add Property" onPress={addProperty} />
+            <Button mode="outlined" onPress={addProperty}>Add Property</Button>
           </View>
         </View>
 
-        <Button
-          title="Send Event"
-          onPress={sendEvent}
-        />
+        <View style={styles.buttonContainer}>
+          <Button
+            mode="contained"
+            onPress={sendEvent}
+            style={styles.button}
+          >
+            Send Event
+          </Button>
+          <Button
+            mode="contained"
+            onPress={() => setShowSurvey(true)}
+            style={styles.button}
+          >
+            Open Survey
+          </Button>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -133,6 +148,12 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   propertyInput: {
+    marginBottom: 8,
+  },
+  buttonContainer: {
+    gap: 12,
+  },
+  button: {
     marginBottom: 8,
   },
 }); 

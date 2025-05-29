@@ -1,9 +1,23 @@
 import { PostHogEventTracker } from '@/components/PostHogEventTracker';
-import { StyleSheet } from 'react-native';
-
+import { useSurvey } from '@/contexts/SurveyContext';
+import { StyleSheet, View } from 'react-native';
+import { Button } from 'react-native-paper';
 
 export default function EventScreen() {
-  return <PostHogEventTracker />;
+  const { setShowSurvey } = useSurvey();
+
+  return (
+    <View style={styles.container}>
+      <PostHogEventTracker />
+      <Button 
+        mode="contained" 
+        onPress={() => setShowSurvey(true)}
+        style={styles.button}
+      >
+        Open Survey
+      </Button>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -27,5 +41,8 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     position: 'absolute',
+  },
+  button: {
+    marginTop: 20,
   },
 });
