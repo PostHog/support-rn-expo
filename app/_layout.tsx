@@ -1,11 +1,13 @@
+import { AuthToggle } from '@/components/AuthToggle';
+import { ConditionalPostHogProvider } from '@/components/ConditionalPostHogProvider';
 import { PostHogSurveyTest } from '@/components/PostHogSurveyTest';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { PostHogProvider, PostHogSurveyProvider } from 'posthog-react-native';
 import 'react-native-reanimated';
 
+import { AuthProvider } from '@/hooks/useAuth';
 import { useColorScheme } from '@/hooks/useColorScheme';
 
 export default function RootLayout() {
@@ -20,24 +22,18 @@ export default function RootLayout() {
   }
 
   return (
-    <PostHogProvider
-      apiKey="phc_YjhOo6KO2hwmIAc9PLoCPzlGwUZ4dP3u7gURRB9wTNZ"
-      options={{
-        host: 'https://us.i.posthog.com',
-        enableSessionReplay: true,
-      }}
-      debug={true}
-    >
-      <PostHogSurveyProvider>
+    <AuthProvider>
+      <ConditionalPostHogProvider>
         <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
           <Stack>
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
             <Stack.Screen name="+not-found" />
           </Stack>
           <StatusBar style="auto" />
+          <AuthToggle />
           <PostHogSurveyTest />
         </ThemeProvider>
-      </PostHogSurveyProvider>
-    </PostHogProvider>
+      </ConditionalPostHogProvider>
+    </AuthProvider>
   );
 }
