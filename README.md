@@ -20,6 +20,12 @@ This repository serves as a reference implementation for using the PostHog React
    npx expo start
    ```
 
+You can also run this app in web mode, which is useful for supporting some use cases:
+
+   ```bash
+   npx expo start --web
+   ```
+
 ## Key Features Demonstrated
 
 - PostHog initialization and configuration

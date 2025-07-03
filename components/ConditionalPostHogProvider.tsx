@@ -1,10 +1,31 @@
 import { useAuth } from '@/hooks/useAuth';
-import PostHog, { PostHogProvider, PostHogSurveyProvider } from 'posthog-react-native';
-import React, { useMemo } from 'react';
+import { createWebPostHogWrapper } from '@/utils';
+import PostHog, { PostHogProvider, PostHogSurveyProvider, usePostHog } from 'posthog-react-native';
+import React, { useEffect, useMemo } from 'react';
+import { Platform } from 'react-native';
 
 interface ConditionalPostHogProviderProps {
   children: React.ReactNode;
 }
+
+// Component to create web-specific PostHog wrapper
+const WebPostHogWrapper = ({ children }: { children: React.ReactNode }) => {
+  const posthog = usePostHog();
+
+  useEffect(() => {
+    if (Platform.OS === 'web' && posthog) {
+      // Create web wrapper that automatically includes app metadata
+      const webPostHog = createWebPostHogWrapper(posthog);
+      
+      // Replace the posthog instance in the context
+      // Note: This is a workaround since we can't directly modify the context
+      // The wrapper will be used in components that import it
+      console.log('Web PostHog wrapper ready for use');
+    }
+  }, [posthog]);
+
+  return <>{children}</>;
+};
 
 export const ConditionalPostHogProvider = ({ children }: ConditionalPostHogProviderProps) => {
   const { isAuthenticated } = useAuth();
@@ -30,7 +51,9 @@ export const ConditionalPostHogProvider = ({ children }: ConditionalPostHogProvi
   return (
     <PostHogProvider client={posthogClient} autocapture debug={true}>
       <PostHogSurveyProvider>
-        {children}
+        <WebPostHogWrapper>
+          {children}
+        </WebPostHogWrapper>
       </PostHogSurveyProvider>
     </PostHogProvider>
   );

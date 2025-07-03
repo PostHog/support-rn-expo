@@ -1,14 +1,16 @@
-import { PostHogUserIdentifier } from '@/components/PostHogUserIdentifier';
-import { StyleSheet } from 'react-native';
+import { ConstantsDebug } from '@/components/ConstantsDebug';
+import { StyleSheet, View } from 'react-native';
 
 export default function UserScreen() {
-  return <PostHogUserIdentifier />;
+  return (
+    <View style={styles.container}>
+      <ConstantsDebug />
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 }); 

@@ -1,6 +1,7 @@
+import { createWebPostHogWrapper } from '@/utils';
 import { usePostHog } from 'posthog-react-native';
 import React, { useState } from 'react';
-import { Button, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Button, Platform, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 
 interface EventProperty {
   key: string;
@@ -13,6 +14,9 @@ export const PostHogEventTracker = () => {
   const [properties, setProperties] = useState<EventProperty[]>([]);
   const [newPropertyKey, setNewPropertyKey] = useState('');
   const [newPropertyValue, setNewPropertyValue] = useState('');
+
+  // Use web wrapper on web platform for automatic app metadata
+  const enhancedPostHog = Platform.OS === 'web' ? createWebPostHogWrapper(posthog) : posthog;
 
   const addProperty = () => {
     if (newPropertyKey.trim()) {
@@ -35,10 +39,13 @@ export const PostHogEventTracker = () => {
 
       const finalEventName = eventName.trim() || 'button_clicked';
       
-      posthog.capture(finalEventName, eventProps);
-      await posthog.flush();
+      enhancedPostHog.capture(finalEventName, eventProps);
+      await enhancedPostHog.flush();
       
       console.log(`Event sent: ${finalEventName}`, eventProps);
+      if (Platform.OS === 'web') {
+        console.log('Web mode: App metadata automatically included with event');
+      }
     } catch (error) {
       console.error('Error sending event:', error);
     }
